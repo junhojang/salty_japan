@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'salty_japanese'
+set :repo_url, 'https://github.com/junhojang/salty_japanese.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+set :deploy_to, '/todpop/salty_japanese'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -41,6 +41,8 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
+      excute "ps -ef | grep thin |grep -v grep | awk '{print $2}' | xargs kill -9"
+      excute "cd /todpop/salty_japanese/current; rake db:migrate; rails s thin -d"
     end
   end
 
