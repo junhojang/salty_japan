@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'mysql2'
 gem 'sshkit'
 gem 'net-ssh'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

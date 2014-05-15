@@ -42,7 +42,7 @@ namespace :deploy do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
       execute "ps -ef | grep thin |grep -v grep | awk '{print $2}' | xargs kill -9"
-      execute "cd /todpop/salty_japan/current; rake db:migrate; rails s thin -d"
+      execute "cd /todpop/salty_japan/current; bundle install; rake db:migrate; rails s thin -d;"
     end
   end
 
