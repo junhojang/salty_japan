@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'salty_japanese'
-set :repo_url, 'https://github.com/junhojang/salty-japanese.git'
+set :application, 'salty_japan'
+set :repo_url, 'https://github.com/junhojang/salty_japan.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/todpop/salty_japanese'
+set :deploy_to, '/todpop/salty_japan'
 
 # Default value for :scm is :git
 # set :scm, :git
