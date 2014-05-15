@@ -41,8 +41,8 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       # execute :touch, release_path.join('tmp/restart.txt')
-      excute "ps -ef | grep thin |grep -v grep | awk '{print $2}' | xargs kill -9"
-      excute "cd /todpop/salty_japanese/current; rake db:migrate; rails s thin -d"
+      execute "ps -ef | grep thin |grep -v grep | awk '{print $2}' | xargs kill -9"
+      execute "cd /todpop/salty_japanese/current; rake db:migrate; rails s thin -d"
     end
   end
 
