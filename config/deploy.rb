@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'salty_japanese'
-set :repo_url, 'https://github.com/junhojang/salty_japanese.git'
+set :repo_url, 'https://github.com/junhojang/salty-japanese.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
