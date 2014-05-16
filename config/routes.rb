@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  namespace :api do
+  get 'etc/index'
+  end
+
+  namespace :api do
+  get 'qpcon/index'
+  end
+
+  namespace :api do
+  get 'test/index'
+  end
+
+  namespace :api do
+  get 'advertisement/index'
+  end
+
+  namespace :api do
+  get 'user/index'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
