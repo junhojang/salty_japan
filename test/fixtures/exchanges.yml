@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  name: MyString
+  bank: MyString
+  account: MyString
+  process_status: 1
+  amount: 1
+
+two:
+  user_id: 1
+  name: MyString
+  bank: MyString
+  account: MyString
+  process_status: 1
+  amount: 1

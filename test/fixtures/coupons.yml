@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ad_id: 1
+  name: MyString
+  company: MyString
+  dsc: MyString
+  img_url: MyString
+  valid_start_date: 2014-05-16 03:00:10
+
+two:
+  ad_id: 1
+  name: MyString
+  company: MyString
+  dsc: MyString
+  img_url: MyString
+  valid_start_date: 2014-05-16 03:00:10

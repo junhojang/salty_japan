@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stage_id: 1
+  word_index: 1
+  word: MyString
+  hiragana: MyString
+  mean: MyString
+  phonetics: MyString
+  img_url: MyString
+  voice: 1
+
+two:
+  stage_id: 1
+  word_index: 1
+  word: MyString
+  hiragana: MyString
+  mean: MyString
+  phonetics: MyString
+  img_url: MyString
+  voice: 1

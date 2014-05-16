@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  daily_test_cnt: 1
+  current_reward: 1
+  total_reward: 1
+  last_tested_at: 2014-05-16 01:35:51
+
+two:
+  user_id: 1
+  daily_test_cnt: 1
+  current_reward: 1
+  total_reward: 1
+  last_tested_at: 2014-05-16 01:35:51

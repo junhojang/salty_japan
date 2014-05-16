@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category_id: 1
+  name: MyString
+  change_market: MyString
+  stock_cnt: 1
+  market_cost: 1
+  common_cost: 1
+  min_age: 1
+  use_info: MyString
+  valid_type: 1
+  valid_date: 1
+  min_sale_cnt: 1
+  max_sale_cnt: 1
+  mon_max_sale_cnt: 1
+  sale_gb: 1
+  prod_gb: 1
+  pin_type: 1
+  img_url_70: MyString
+  img_url_150: MyString
+  img_url_250: MyString
+
+two:
+  category_id: 1
+  name: MyString
+  change_market: MyString
+  stock_cnt: 1
+  market_cost: 1
+  common_cost: 1
+  min_age: 1
+  use_info: MyString
+  valid_type: 1
+  valid_date: 1
+  min_sale_cnt: 1
+  max_sale_cnt: 1
+  mon_max_sale_cnt: 1
+  sale_gb: 1
+  prod_gb: 1
+  pin_type: 1
+  img_url_70: MyString
+  img_url_150: MyString
+  img_url_250: MyString

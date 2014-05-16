@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  product_id: 1
+  order_id: 1
+  barcode: MyString
+  approval_num: MyString
+  is_used: 1
+  is_expired: 1
+  is_canceled: 1
+  valid_end_date: 1
+  issue_date: 2014-05-16 01:42:26
+
+two:
+  user_id: 1
+  product_id: 1
+  order_id: 1
+  barcode: MyString
+  approval_num: MyString
+  is_used: 1
+  is_expired: 1
+  is_canceled: 1
+  valid_end_date: 1
+  issue_date: 2014-05-16 01:42:26

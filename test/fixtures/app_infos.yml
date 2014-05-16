@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  time_quick_ans: 1
+  one_medal: 1
+  two_medal: 1
+  test_reward_max: 1
+  android_version: MyString
+  new_stage_day_limit: 1
+  android_package_name: MyString
+  market_url: MyString
+
+two:
+  time_quick_ans: 1
+  one_medal: 1
+  two_medal: 1
+  test_reward_max: 1
+  android_version: MyString
+  new_stage_day_limit: 1
+  android_package_name: MyString
+  market_url: MyString

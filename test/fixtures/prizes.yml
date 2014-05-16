@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  title: MyString
+  dsc: MyString
+  category: 1
+  period: 1
+  rank: 1
+  img_url: MyString
+  start_date: 2014-05-16 01:51:57
+  end_date: 2014-05-16 01:51:57
+
+two:
+  name: MyString
+  title: MyString
+  dsc: MyString
+  category: 1
+  period: 1
+  rank: 1
+  img_url: MyString
+  start_date: 2014-05-16 01:51:57
+  end_date: 2014-05-16 01:51:57
