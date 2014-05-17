@@ -20,6 +20,17 @@ class Api::UserController < ApplicationController
     end
   end
 
+  def set_log_user_login
+   if params[:user_id].present?
+      if @user = User.find_by_id(params[:user_id])
+         @log = LogUserLogin.new
+         @log.user_id = params[:user_id]
+         @log.dsc = 'User : ' + @user.email + ' Logined '
+         @log.save
+      end
+   end
+  end
+
   def get_user_infos
     #user_infos + learning_progresses
   end

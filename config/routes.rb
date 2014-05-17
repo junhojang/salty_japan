@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :api do
   get 'user/index'
   get 'user/signup'
+  get 'user/set_log_user_login'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
