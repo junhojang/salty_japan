@@ -5,7 +5,7 @@ class Api::UserController < ApplicationController
       @user = User.new
       @user.email = params[:email]
       @user.password = params[:password]
-      @user.password_confirmnation = params[:password]
+      @user.password_confirmation = params[:password]
       @user.join_method = 1
       @user.is_active = 1
       @user.is_admin = 0
