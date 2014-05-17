@@ -2,7 +2,7 @@ class Api::UserController < ApplicationController
   
   def signup
     if params[:email].present? and params[:password].present?
-      if !User.find_by email :params[:email] 
+      if !User.find_by email: params[:email] 
         @user = User.new
         @user.email = params[:email]
         @user.password = params[:password]
