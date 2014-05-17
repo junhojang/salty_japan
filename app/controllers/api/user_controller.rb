@@ -26,7 +26,7 @@ class Api::UserController < ApplicationController
  
   def login
     if params[:email].present? and params[:password].present?
-      if @user = User.find_by email: params[:email]
+      if @user = (User.find_by email: params[:email])
         if @user.authenticate(params[:password])
           @status = true
         end
