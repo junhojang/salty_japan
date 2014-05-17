@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'user/index'
   get 'user/signup'
   get 'user/set_log_user_login'
+  get 'user/login'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
