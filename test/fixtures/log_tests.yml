@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  test_type: 1
+  category: 1
+  stage: 1
+  level: 1
+  medal_num: 1
+  score: 1
+  reward: 1
+  point: 1
+  dsc: MyString
+  is_first: 1
+
+two:
+  user_id: 1
+  test_type: 1
+  category: 1
+  stage: 1
+  level: 1
+  medal_num: 1
+  score: 1
+  reward: 1
+  point: 1
+  dsc: MyString
+  is_first: 1
