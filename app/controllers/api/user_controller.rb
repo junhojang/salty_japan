@@ -1,5 +1,8 @@
 class Api::UserController < ApplicationController
+  # json basic format {status:'true or false' ,msg:'message' ,data:{~~~~}}
   @status = false
+  @msg = 'failed to signup'
+  @data = nil
   def signup
     if params[:email].present? and params[:password].present?
       if !User.find_by email: params[:email] 
@@ -11,6 +14,8 @@ class Api::UserController < ApplicationController
         @user.is_active = 1
         @user.is_admin = 0
         @user.save
+        @status = true
+        @msg = 'success to signup with email'
       end
     elsif params[:f_email].present?
       if !User.find_by f_email: params[:f_email]
@@ -20,21 +25,26 @@ class Api::UserController < ApplicationController
         @user.is_active = 1
         @user.is_admin = 0
         @user.save
+        @status = true
+        @msg = 'success to signup with facebook'
       end
     end
   end
  
   def login
+    @msg = 'failed to login'
     if params[:email].present? and params[:password].present?
       if @user = (User.find_by email: params[:email])
         if @user.authenticate(params[:password])
           @status = true
+          @msg = 'success to login'
         end
       end 
     end
   end
 
   def set_log_user_login
+    @msg = 'failed to set log_user_login'
     if params[:user_id].present?
       if @user = User.find_by_id(params[:user_id])
          @log = LogUserLogin.new
@@ -45,7 +55,8 @@ class Api::UserController < ApplicationController
     end
   end
 
-  def get_user_infos
+  def get_user_info
+    @msg = 'failed to get user_info'
     #user_infos + learning_progresses
   end
 
