@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_many :user_info
-  has_many :learning_progress
+  has_one :user_info
+  has_one :learning_progress
 
   has_many :log_user_login
   has_many :log_reward
@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
 
   has_many :exchange
 
-  has_many :ranking_week_a
-  has_many :ranking_week_b
-  has_many :ranking_week_c
-  has_many :ranking_week_d
-  has_many :ranking_current
+  has_one :ranking_week_a
+  has_one :ranking_week_b
+  has_one :ranking_week_c
+  has_one :ranking_week_d
+  has_one :ranking_current
 
   has_many :user_best_score
   has_many :my_word
@@ -28,5 +28,5 @@ class User < ActiveRecord::Base
   has_many :qpocn_order
 
   has_many :survey_result
-  has_mnay :user_stage_info
+  has_one :user_stage_info
 end
