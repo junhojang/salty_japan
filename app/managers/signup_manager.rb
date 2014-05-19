@@ -25,7 +25,7 @@ class SignupManager
       return false, 'failed to signup(ERR:0)',{err_code:0}
     elsif User.exists?(email: params[:email])
       return false, 'failed to signup(ERR:128)', {err_code:128}
-    elsif params[:recommend].present? and User.exists?(nickname: params[:recommend])
+    elsif params[:recommend].present? and UserInfo.exists?(nickname: params[:recommend])
       return false, 'failed to signup(ERR:131)', {err_code:131}
     elsif UserInfo.exists?(ph: params[:ph])
       return false, 'failed to signup(ERR:132)', {err_code:132}
