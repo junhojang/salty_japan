@@ -6,16 +6,16 @@ class SignupManager
       @p_user = User.find_by id: @p_user_info.user_id if @p_user_info.present?
       @f_user = User.find_by f_email: params[:f_email] 
       if @f_user.present?
-        return status:true, msg:'login', data:{method:1}
+        return true, 'login', {method:1}
       elsif !@f_uesr.present? and !@p_user.present?
-        return status:true, msg:'signup', data:{method:4}
+        return true, 'signup', {method:4}
       elsif !@f_user.present? and @p_user.f_email.present?
-        return status:true, msg:'wrong femail', data:{method:2}
+        return true, 'wrong femail', {method:2}
       elsif !@f_user.present? and @p_user.email.present?
-        return status:true, msg:'cross signup', data:{method:3}
+        return true, 'cross signup', {method:3}
       end
     else
-      return status:false
+      return false
     end
   end
 
