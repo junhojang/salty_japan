@@ -15,7 +15,7 @@ class SignupManager
         return status:true, msg:'cross signup', data:{method:3}
       end
     else
-      return status:false, msg:'there are no some params', nil
+      return status:false
     end
   end
 
