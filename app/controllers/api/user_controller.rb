@@ -6,7 +6,7 @@ class Api::UserController < ApplicationController
 
   def chk_nickname
     if params[:nickname].present?
-      if User.find_by nickname: params[:nickname]
+      if UserInfo.find_by nickname: params[:nickname]
         @msg = 'nickname was duplicated'
       else
         @status = true
