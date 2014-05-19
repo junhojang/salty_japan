@@ -19,7 +19,7 @@ class Api::UserController < ApplicationController
 
   def signup_with_email
     @status, @msg, @data = SignupManager.chk_email_signup_params(params)
-    SignupManager.signup_with_email(params) if @status
+    @data = SignupManager.signup_with_email(params) if @status
   end
 
   def det_facebook_login_method

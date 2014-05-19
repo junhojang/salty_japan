@@ -57,6 +57,7 @@ class SignupManager
     end
     @user_info.save
     LogManager.set_log_signup(@user.id,1,'Sucess to signup with email')
+    return @user
   end
 
 end
