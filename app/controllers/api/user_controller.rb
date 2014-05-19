@@ -40,6 +40,7 @@ class Api::UserController < ApplicationController
       SignupManager.cross_signup_with_f_email(params)
     when 4
       SignupManager.cross_signup_with_email(params)
+    end
   end
  
   def withdraw_from_member
