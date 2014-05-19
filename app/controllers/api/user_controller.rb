@@ -24,24 +24,10 @@ class Api::UserController < ApplicationController
   end
 
   def det_facebook_login_method
+    @status, @msg, @data = SignupManager.det_facebook_login_method(params)
   end
 
   def signup_with_facebook
-  end
-
-  def signup
-    case SignupManager.get_signup_type(params)
-    when 1
-      @status, @msg, @data  = SignupManager.chk_signup_params(params)
-      SignupManager.signup_with_email(params) if @status == true
-    when 2
-     
-      SignupManager.signup_with_f_email(params)
-    when 3
-      SignupManager.cross_signup_with_f_email(params)
-    when 4
-      SignupManager.cross_signup_with_email(params)
-    end
   end
  
   def withdraw_from_member
