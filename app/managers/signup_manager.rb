@@ -51,7 +51,7 @@ class SignupManager
     @user_info.age_group = params[:age_group]
     @user_info.address = params[:address]
     @user_info.ph = params[:ph]
-    if params[:recommend].present? and User.exist?(nickname: params[:nickname])
+    if params[:recommend].present? and User.exists?(nickname: params[:nickname])
       @user_info.recommend = params[:recommend]
       LogManager.set_log_reward(@user.id,2002,30,'Signup Recommend reward')        
     end
