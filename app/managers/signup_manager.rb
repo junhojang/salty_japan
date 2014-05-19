@@ -22,15 +22,15 @@ class SignupManager
   def self.chk_email_signup_params(params)
     #err_code: 0(lack of params) 128(email duplicate) 131(failed to find recommend nickname) 132(already registed ph)
     if !params[:nickname].present? or !params[:sex].present? or !params[:age_group].present? or !params[:address].present? or !params[:ph].present?
-      return status:false, msg:'failed to signup(ERR:0)', data:{err_code:0}
+      return false, 'failed to signup(ERR:0)',{err_code:0}
     elsif User.exist?(email: params[:email])
-      return status:false, msg:'failed to signup(ERR:128)', data:{err_code:128}
+      return false, 'failed to signup(ERR:128)', {err_code:128}
     elsif params[:recommend].present? and User.exist?(nickname: params[:recommend])
-      return status:false, msg:'failed to signup(ERR:131)', data:{err_code:131}
+      return false, 'failed to signup(ERR:131)', {err_code:131}
     elsif User.exist?(ph: params[:ph])
-      return status:false, msg:'failed to signup(ERR:132)', data:{err_code:132}
+      return false, 'failed to signup(ERR:132)', {err_code:132}
     else
-      return status:true, nil, nil
+      return true, nil, nil
     end
   end
   
