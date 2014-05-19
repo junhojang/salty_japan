@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   get 'user/signup'
   get 'user/set_log_user_login'
   get 'user/login'
+
+  get 'user/chk_nickname'
+  get 'user/signup_with_email'
+  get 'user/det_facebook_login_method'
+  get 'user/signup_with_facebook'
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

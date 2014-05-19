@@ -1,0 +1,164 @@
+class Api::UserController < ApplicationController
+  # json basic format {status:'true or false' ,msg:'message' ,data:{~~~~}}
+  @status = false # default false
+  @msg = '' #
+
+  def chk_nickname
+    if params[:nickname].present?
+      if User.find_by nickname: params[:nickname]
+        @msg = 'nickname was duplicated'
+      else
+        @status = true
+        @msg = 'nickname was not duplicated'
+      end
+    else
+      @msg = 'there is no nickname param'
+    end
+  end
+
+  def signup
+    # cross signup
+    if params[:user_id].present?
+      @user = (User.find_by id: params[:user_id])
+      if @user.empty?
+        @msg = 'failed to find user by user_id'
+      # facebook -> email cross
+      elsif params[:email].present?
+        # chk email duplicated
+        if !User.exist?(email: params[:email])
+          @user.email = email
+          @user.join_method = 3 # cross signup type
+          @user.save
+          @status = true
+          @msg = 'success to cross signup(facebook -> email)'
+        else
+          @msg = 'failed to cross signup(facebook -> email), duplicate email'
+        end
+      # email -> facebook cross
+      elsif params[:f_email].present? and params[:f_address].present?
+        # chk f_email duplicated
+        if !User.exist?(f_email: params[:f_email])
+          @user.f_email = params[:f_email]
+          @user_info = (UserInfo.find_by id: params[:user_id])
+          @user_info.f_address = params[:f_address]
+          @user.save
+          @user_info.save
+          @status = true
+          @msg = 'sucess to cross signup(email -> facebook)'
+        else
+          @msg = 'failed to cross signup(email -> facebook), duplicate f_email'
+        end
+      end
+    # case 1 => signup with email
+    elsif params[:email].present? and params[:password].present?
+      #if params ...
+      if params[:nickname].present? and params[:sex].present? and params[:age_group].present? and params[:ph].present?
+        @user = User.new
+        @user.email = params[:email]
+        @user.password = params[:password]
+        @user.password_confirmation = params[:password]
+        @user.join_method = 1
+        @user.is_active = 1
+        @user.is_admin = 0
+        @user.save
+
+        @user_info = UserInfo.new
+        @user_info.user_id = @user.id
+        @user_info.nickname = params[:nickname]
+        @user_info.sex = params[:sex]
+        @user_info.age_group = params[:age_group]
+        # if exist recommend
+        @user_info.recommend = params[:recommend]
+        @user_info.ph = params[:ph]
+        @user_info.save
+
+        @status = true
+        @msg = 'success to signup with email'
+      else
+        @msg = 'failed to signup with email, lack of params'
+      end
+    elsif params[:f_email].present?
+      # case 3 => cross signup(email -> facebook)
+      if @user = (User.find_by f_email: params[:f_email])
+        @status = true
+        @msg = 'success to cross signup(email -> facebook)'
+      # case 2 => signup with facebook
+      else
+        @user = User.new
+        @user.f_email = params[:f_email]
+        @user.join_method = 2
+        @user.is_active = 1
+        @user.is_admin = 0
+        @user.save
+        @status = true
+        @msg = 'success to signup with facebook'
+      end
+    else
+      @msg = 'there are no correct params'
+    end
+  end
+ 
+  def withdraw_from_member
+    if params[:user_id].present?
+      if @user = (User.find_by id: params[:user_id])
+        if @user.is_active == 1
+          @status = true
+          @msg = 'success to withdraw from member'
+        else
+          @user = nil
+          @msg = 'already withdrawn'
+        end
+      end
+    else
+      @msg = 'there is no user_id parameter'
+    end
+  end
+
+  def login
+    if params[:email].present? and params[:password].present?
+      if @user = (User.find_by email: params[:email])
+        if @user.authenticate(params[:password])
+          @status = true
+          @msg = 'success to login'
+        else
+          @msg = 'failed to authenticate'
+        end
+      else
+        @msg = 'failed to find user by email'
+      end
+    else
+      @msg = 'there are no email or password parameters'
+    end
+  end
+
+  def set_log_user_login
+    if params[:user_id].present?
+      if @user = User.find_by_id(params[:user_id])
+        @log = LogUserLogin.new
+        @log.user_id = params[:user_id]
+        @log.dsc = 'User : ' + @user.email + ' Logined '
+        @log.save
+        @status = true
+        @msg = 'success to set log_user_login'
+      else
+        @msg = 'failed to find user by user_id'
+      end
+    else
+      @msg = 'there is no user_id parameter'
+    end
+  end
+
+  def get_user_info
+    if params[:user_id].present?
+      if @user = (UserInfo.find_by user_id: params[:user_id])
+        @status = true
+        @msg = 'success to get user_info'
+      else
+        @msg = 'failed to find user_info by user_id'
+      end
+    else
+      @msg = 'there is no user_id parameter'
+    end
+  end
+
+end
