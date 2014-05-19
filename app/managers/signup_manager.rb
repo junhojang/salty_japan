@@ -1,6 +1,6 @@
 class SignupManager
   require_relative 'log_manager'
-  def self.det_facebook_login_method
+  def self.det_facebook_login_method(params)
     if params[:ph].present? and params[:f_email].present?
       @p_user_info = UserInfo.find_by ph: params[:ph]
       @p_user = User.find_by id: @p_user_info.user_id if @p_user_info.present?
@@ -13,8 +13,9 @@ class SignupManager
         return status:true, msg:'wrong femail', data:{method:2}
       elsif !@f_user.present? and @p_user.email.present?
         return status:true, msg:'cross signup', data:{method:3}
+      end
     else
-      return status:false, msg:'there are no some params',nil
+      return status:false, msg:'there are no some params', nil
     end
   end
 
@@ -56,9 +57,6 @@ class SignupManager
     end
     @user_info.save
     LogManager.set_log_signup(@user.id,1,'Sucess to signup with email')
-  end
-
-  def self.chk_facebook_signup_params(params)
   end
 
 end
