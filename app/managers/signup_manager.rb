@@ -7,11 +7,11 @@ class SignupManager
       @f_user = User.find_by f_email: params[:f_email] 
       if @f_user.present?
         return status:true, msg:'login', data:{method:1}
-      elsif !@f_uesr_present? and !@p_user.present?
+      elsif !@f_uesr.present? and !@p_user.present?
         return status:true, msg:'signup', data:{method:4}
-      elsif !@f_user_present? and @p_user.f_email.present?
+      elsif !@f_user.present? and @p_user.f_email.present?
         return status:true, msg:'wrong femail', data:{method:2}
-      elsif !@f_user_present? and @p_user.email.present?
+      elsif !@f_user.present? and @p_user.email.present?
         return status:true, msg:'cross signup', data:{method:3}
     else
       return status:false, msg:'there are no some params',nil
