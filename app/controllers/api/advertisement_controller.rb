@@ -24,7 +24,7 @@ class Api::AdvertisementController < ApplicationController
 
     @status = true
     @msg = true
-    @data = @cpdm_to_show.cpdm
+    @data = @cpdm_to_show['cpdm']
 
   end
   def get_cpx
