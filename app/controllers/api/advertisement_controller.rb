@@ -6,10 +6,10 @@ class Api::AdvertisementController < ApplicationController
   def get_ad(ad_type)
     ad_type = (ad_type / 10).floor * 10 # 302 => 300, 370 => 300
     @arr_ads = []   
-    LogModel = nil
-    LogModel = LogCpd if ad_type == 100
-    LogModel = LogCpdm if ad_type == 200
-    LogModel = LogCpx if ad_type ==300
+    log_model = nil
+    log_model = LogCpd if ad_type == 100
+    log_model = LogCpdm if ad_type == 200
+    log_model = LogCpx if ad_type ==300
 
     @grouped_ad = Advertisement.where('ad_type >= ?',ad_type).group('priority')
     @grouped_ad.each do |ad|
@@ -19,7 +19,7 @@ class Api::AdvertisementController < ApplicationController
     @ad_to_show = {'log_cnt' => 999999, 'ad' => nil}
     @arr_ads.each do |ads|
       ads.each do |ad|
-        cnt = LogModel.where("ad_id=? and DATEDIFF(created_at,curdate())=0", ad.id).count
+        cnt = log_model.where("ad_id=? and DATEDIFF(created_at,curdate())=0", ad.id).count
         if @ad_to_show['log_cnt'] > cnt
           @ad_to_show['log_cnt'] = cnt
           @ad_to_show['ad'] = cpdm
