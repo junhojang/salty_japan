@@ -22,7 +22,7 @@ class Api::AdvertisementController < ApplicationController
         cnt = log_model.where("ad_id=? and DATEDIFF(created_at,curdate())=0", ad.id).count
         if @ad_to_show['log_cnt'] > cnt
           @ad_to_show['log_cnt'] = cnt
-          @ad_to_show['ad'] = cpdm
+          @ad_to_show['ad'] = ad
         end
       end
     end
