@@ -10,20 +10,21 @@ class Api::AdvertisementController < ApplicationController
       @arr_cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
     end
     
+    @cpdm_to_show = {log_cnt:-1, cpdm:nil}
     @arr_cpdms.each do |cpdms|
       #cpdm grouped by priority
       cpdms.each do |cpdm|
-        cnt_logs = LogCpdm.where("ad_id=? and created_at>=?", cpdm.id,DateTime.now.to_s(:date)).count
-        if cnt_logs == 0
-          # show this
-          @data = cpdm
-          return
+        cnt = LogCpdm.where("ad_id=? and DATEDIFF(created_at,curdate)", cpdm.id).count
+        if @cpdm_to_show.log_cnt < cnt
+          @cpdm_to_show.log_cnt = cnt
+          @cpdm_to_show.cpdm = cpdm
         end
       end
     end
 
     @status = true
     @msg = true
+    @data = @cpdm_to_show.cpdm
 
   end
   def get_cpx
