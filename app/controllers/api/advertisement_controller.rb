@@ -15,9 +15,9 @@ class Api::AdvertisementController < ApplicationController
       #cpdm grouped by priority
       cpdms.each do |cpdm|
         cnt = LogCpdm.where("ad_id=? and DATEDIFF(created_at,curdate())", cpdm.id).count
-        if @cpdm_to_show.log_cnt < cnt
-          @cpdm_to_show.log_cnt = cnt
-          @cpdm_to_show.cpdm = cpdm
+        if @cpdm_to_show[log_cnt] < cnt
+          @cpdm_to_show[log_cnt] = cnt
+          @cpdm_to_show[cpdm] = cpdm
         end
       end
     end
