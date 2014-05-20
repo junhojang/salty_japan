@@ -4,6 +4,8 @@ class Api::AdvertisementController < ApplicationController
   # priority
   def get_cpdm
     @grouped_cpdm = Advertisement.where('ad_type >= 200').group('priority')
+    @data = @grouped_cpdm
+    return
     @arr_cpdms = []    
     # grouped cpdms 
     @grouped_cpdm.each do |cpdm|
