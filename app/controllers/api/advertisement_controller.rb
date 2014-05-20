@@ -3,12 +3,12 @@ class Api::AdvertisementController < ApplicationController
   end
   # priority
   def get_cpdm
-    @grouped_cpdm = AdvertisementCpdm.all.group('priority')
+    @grouped_cpdm = Advertisement.where('ad_type >= 200').group('priority')
     @cpdms = []    
 
     # grouped cpdms 
     @grouped_cpdm.each do |cpdm|
-      @cpdms.push(AdvertisementCpdm.where('priority = ? and remain > 0',cpdm.priority))
+      @cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
     end
     @status = true
     @msg = true
