@@ -9,9 +9,9 @@ class Api::AdvertisementController < ApplicationController
     log_model = nil
     log_model = LogCpd if ad_type == 100
     log_model = LogCpdm if ad_type == 200
-    log_model = LogCpx if ad_type ==300
+    log_model = LogCpx if ad_type == 300
 
-    @grouped_ad = Advertisement.where('ad_type >= ?',ad_type).group('priority')
+    @grouped_ad = Advertisement.where('ad_type between ? and ?',ad_type, ad_type+100).group('priority')
     @grouped_ad.each do |ad|
       @arr_ads.push(Advertisement.where('ad_type >= ? and priority = ? and remain > 0',ad_type,ad.priority))
     end
