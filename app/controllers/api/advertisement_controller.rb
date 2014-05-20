@@ -1,7 +1,19 @@
 class Api::AdvertisementController < ApplicationController
   def get_cpd
   end
+  # priority
   def get_cpdm
+    @grouped_cpdm = AdvertisementCpdm.all.group('priority')
+    @cpdms = []    
+
+    # grouped cpdms 
+    @grouped_cpdm.each do |cpdm|
+      @cpdms.push(AdvertisementCpdm.where('priority = ? and remain > 0',cpdm.priority))
+    end
+    @status = true
+    @msg = true
+    @data = DateTime.now.to_s(:date) 
+
   end
   def get_cpx
   end
