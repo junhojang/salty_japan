@@ -1,83 +1,46 @@
 class Api::UserController < ApplicationController
   require_relative '../../managers/signup_manager'
+  require_relative '../../validators/signup_validator'
   # json basic format {status:'true or false' ,msg:'message' ,data:{~~~~}}
-  @status = false # default false
-  @msg = '' #
-
+  
+  # start signup process
   def chk_nickname
-    @status = false
-    if params[:nickname].present?
-      if UserInfo.find_by nickname: params[:nickname]
-        @msg = 'nickname was duplicated'
-      else
-        @status = true
-        @msg = 'nickname was not duplicated'
-      end
-    else
-      @msg = 'there is no nickname param'
-    end
+    @status, @msg, @data  = SignupValidator.chk_nickname(params)
   end
 
   def signup_with_email
-    @status, @msg, @data = SignupManager.chk_email_signup_params(params)
+    @status, @msg, @data = SignupValidator.chk_email_signup_params(params)
     @data = SignupManager.signup_with_email(params) if @status
   end
 
   def det_facebook_login_method
-    @status, @msg, @data = SignupManager.det_facebook_login_method(params)
+    @status, @msg, @data = SignupValidator.det_facebook_login_method(params)
+  end
+
+  def cross_signup
+    @status, @msg, @data = SignupValidator.cross_signup(params)
+    @data = SignupManager.cross_signup(params) if @status
   end
 
   def signup_with_facebook
+    @status, @msg, @data = SignupValidator.signup_with_facebook(params)
+    @data = SignupManager.signup_with_facebook(params) if @status
   end
+  # end signup process
  
+
+
   def withdraw_from_member
-    if params[:user_id].present?
-      if @user = (User.find_by id: params[:user_id])
-        if @user.is_active == 1
-          @status = true
-          @msg = 'success to withdraw from member'
-        else
-          @user = nil
-          @msg = 'already withdrawn'
-        end
-      end
-    else
-      @msg = 'there is no user_id parameter'
+    @status, @msg, @data = Validator.withdraw_from_member(params)
+    if @status
+      @data.is_active == 0
+      @data.save 
     end
   end
 
   def login
-    if params[:email].present? and params[:password].present?
-      if @user = (User.find_by email: params[:email])
-        if @user.authenticate(params[:password])
-          @status = true
-          @msg = 'success to login'
-        else
-          @msg = 'failed to authenticate'
-        end
-      else
-        @msg = 'failed to find user by email'
-      end
-    else
-      @msg = 'there are no email or password parameters'
-    end
-  end
-
-  def set_log_user_login
-    if params[:user_id].present?
-      if @user = User.find_by_id(params[:user_id])
-        @log = LogUserLogin.new
-        @log.user_id = params[:user_id]
-        @log.dsc = 'User : ' + @user.email + ' Logined '
-        @log.save
-        @status = true
-        @msg = 'success to set log_user_login'
-      else
-        @msg = 'failed to find user by user_id'
-      end
-    else
-      @msg = 'there is no user_id parameter'
-    end
+    @status, @msg, @data = Validator.login(params)
+    LogManager.set_log_user_login(@data.id,'') if @status
   end
 
   def get_user_info

@@ -1,22 +1,18 @@
 Rails.application.routes.draw do
   namespace :api do
-  get 'etc/index'
   end
 
   namespace :api do
-  get 'qpcon/index'
   end
 
   namespace :api do
-  get 'test/index'
+  get 'test/get_level_test_words'
   end
 
   namespace :api do
-  get 'advertisement/index'
   end
 
   namespace :api do
-  get 'user/index'
   get 'user/signup'
   get 'user/set_log_user_login'
   get 'user/login'

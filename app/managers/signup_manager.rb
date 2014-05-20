@@ -1,39 +1,6 @@
 class SignupManager
   require_relative 'log_manager'
-  def self.det_facebook_login_method(params)
-    if params[:ph].present? and params[:f_email].present?
-      @p_user_info = UserInfo.find_by ph: params[:ph]
-      @p_user = User.find_by id: @p_user_info.user_id if @p_user_info.present?
-      @f_user = User.find_by f_email: params[:f_email] 
-      if @f_user.present?
-        return true, 'login', {method:1}
-      elsif !@f_uesr.present? and !@p_user.present?
-        return true, 'signup', {method:4}
-      elsif !@f_user.present? and @p_user.f_email.present?
-        return true, 'wrong femail', {method:2}
-      elsif !@f_user.present? and @p_user.email.present?
-        return true, 'cross signup', {method:3}
-      end
-    else
-      return false
-    end
-  end
-
-  def self.chk_email_signup_params(params)
-    #err_code: 0(lack of params) 128(email duplicate) 131(failed to find recommend nickname) 132(already registed ph)
-    if !params[:nickname].present? or !params[:sex].present? or !params[:age_group].present? or !params[:address].present? or !params[:ph].present?
-      return false, 'failed to signup(ERR:0)',{err_code:0}
-    elsif User.exists?(email: params[:email])
-      return false, 'failed to signup(ERR:128)', {err_code:128}
-    elsif params[:recommend].present? and !UserInfo.exists?(nickname: params[:recommend])
-      return false, 'failed to signup(ERR:131)', {err_code:131}
-    elsif UserInfo.exists?(ph: params[:ph])
-      return false, 'failed to signup(ERR:132)', {err_code:132}
-    else
-      return true, nil, nil
-    end
-  end
-  
+   
   def self.signup_with_email(params)
     @user = User.new
     @user.email = params[:email]
@@ -58,6 +25,38 @@ class SignupManager
     @user_info.save
     LogManager.set_log_signup(@user.id,1,'Sucess to signup with email')
     return @user
+  end
+
+  def self.signup_with_facebook(params)
+    @user = User.new
+    @user.f_email = params[:f_email]
+    @user.join_method = 2
+    @uesr.is_activew = 1
+    @user.is_admin = 0
+    @user.save
+
+    @user_info = UserInfo.new
+    @user_info.user_id = @user.id
+    @user_info.nickname = params[:nickname]
+    @user_info.f_address = params[:f_address]
+    @user_info.ph = params[:ph]
+    if params[:recommend].present? and UserInfo.exists?(nickname: params[:recommend])
+      @user_info.recommend = params[:recommend]
+      LogManager.set_log_reward(@user.id,2002,30,'Signup Recommend reward')
+    end
+    @user_info.save
+    LogManager.set_log_signup(@user.id,2,'Sucess to signup with f_email')
+    return @user
+  end
+
+  def self.cross_signup(params)
+    @p_user_info = UserInfo.find_by ph: params[:ph]
+    @p_user = User.find_by id: @p_user_info.user_id if @p_user_info.present?
+    @p_user.f_email = params[:f_email]
+    @p_user_info.f_address = params[:f_address]
+    @p_user.save
+    @p_user_info.save
+    return @p_user
   end
 
 end
