@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+  get 'advertisement/get_cpd'
   get 'advertisement/get_cpdm'
+  get 'advertisement/get_cpx'
+
   end
 
   namespace :api do

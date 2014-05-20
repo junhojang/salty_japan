@@ -2,35 +2,44 @@ class Api::AdvertisementController < ApplicationController
   def get_cpd
   end
   # priority
-  def get_cpdm
-    @grouped_cpdm = Advertisement.where('ad_type >= 200').group('priority')
-    # @data = @grouped_cpdm
-    # return
-    @arr_cpdms = []    
-    # grouped cpdms 
-    @grouped_cpdm.each do |cpdm|
-      @arr_cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
+  # 100 200 300
+  def get_ad(ad_type)
+    ad_type = (ad_type / 10).floor * 10 # 302 => 300, 370 => 300
+    @arr_ads = []   
+    LogModel = nil
+    LogModel = LogCpd if ad_type == 100
+    LogModel = LogCpdm if ad_type == 200
+    LogModel = LogCpx if ad_type ==300
+
+    @grouped_ad = Advertisement.where('ad_type >= ?',ad_type).group('priority')
+    @grouped_ad.each do |ad|
+      @arr_ads.push(Advertisement.where('ad_type >= ? and priority = ? and remain > 0',ad_type,ad.priority))
     end
-    # @data = @arr_cpdms
-    # return 
-    @cpdm_to_show = {'log_cnt' => 999999, 'cpdm' => nil}
-    @arr_cpdms.each do |cpdms|
-      #cpdm grouped by priority
-      cpdms.each do |cpdm|
-        cnt = LogCpdm.where("ad_id=? and DATEDIFF(created_at,curdate())=0", cpdm.id).count
-        if @cpdm_to_show['log_cnt'] > cnt
-          @cpdm_to_show['log_cnt'] = cnt
-          @cpdm_to_show['cpdm'] = cpdm
+
+    @ad_to_show = {'log_cnt' => 999999, 'ad' => nil}
+    @arr_ads.each do |ads|
+      ads.each do |ad|
+        cnt = LogModel.where("ad_id=? and DATEDIFF(created_at,curdate())=0", ad.id).count
+        if @ad_to_show['log_cnt'] > cnt
+          @ad_to_show['log_cnt'] = cnt
+          @ad_to_show['ad'] = cpdm
         end
       end
     end
 
-    @status = true
-    @msg = true
-    @data = @cpdm_to_show
-
+    return true, 'test', @ad_to_show['ad']
   end
+
+  def get_cpd
+    @status, @msg, @data = get_ad(100)
+  end
+
+  def get_cpdm
+    @status, @msg, @data = get_ad(200)
+  end
+
   def get_cpx
+    @status, @msg, @data = get_ad(300)
   end
 
   def get_cpd_list
