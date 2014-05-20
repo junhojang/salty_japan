@@ -17,6 +17,7 @@ class Api::AdvertisementController < ApplicationController
         if cnt_logs == 0
           # show this
           @data = cpdm
+          return
         end
       end
     end
