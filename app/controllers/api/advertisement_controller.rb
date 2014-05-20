@@ -4,15 +4,25 @@ class Api::AdvertisementController < ApplicationController
   # priority
   def get_cpdm
     @grouped_cpdm = Advertisement.where('ad_type >= 200').group('priority')
-    @cpdms = []    
-
+    @arr_cpdms = []    
     # grouped cpdms 
     @grouped_cpdm.each do |cpdm|
-      @cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
+      @arr_cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
     end
+    
+    @arr_cpdms.each do |cpdms|
+      #cpdm grouped by priority
+      cpdms.each do |cpdm|
+        cnt_logs = LogCpdm.where("ad_id=? and created_at>=?", cpdm.id,DateTime.now.to_s(:date)).count
+        if cnt_logs == 0
+          # show this
+          @data = cpdm
+        end
+      end
+    end
+
     @status = true
     @msg = true
-    @data = DateTime.now.to_s(:date) 
 
   end
   def get_cpx
