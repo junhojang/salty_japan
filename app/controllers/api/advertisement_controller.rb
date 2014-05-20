@@ -11,14 +11,14 @@ class Api::AdvertisementController < ApplicationController
     @grouped_cpdm.each do |cpdm|
       @arr_cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
     end
-    @data = @arr_cpdms
-    return 
-    @cpdm_to_show = {'log_cnt' => -1, 'cpdm' => nil}
+    # @data = @arr_cpdms
+    # return 
+    @cpdm_to_show = {'log_cnt' => 999999, 'cpdm' => nil}
     @arr_cpdms.each do |cpdms|
       #cpdm grouped by priority
       cpdms.each do |cpdm|
         cnt = LogCpdm.where("ad_id=? and DATEDIFF(created_at,curdate())", cpdm.id).count
-        if @cpdm_to_show['log_cnt'] < cnt
+        if @cpdm_to_show['log_cnt'] > cnt
           @cpdm_to_show['log_cnt'] = cnt
           @cpdm_to_show['cpdm'] = cpdm
         end
