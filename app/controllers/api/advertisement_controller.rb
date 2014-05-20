@@ -10,7 +10,7 @@ class Api::AdvertisementController < ApplicationController
       @arr_cpdms.push(Advertisement.where('ad_type >= 200 and priority = ? and remain > 0',cpdm.priority))
     end
     
-    @cpdm_to_show = {log_cnt:-1, cpdm:nil}
+    @cpdm_to_show = {log_cnt => -1, cpdm => nil}
     @arr_cpdms.each do |cpdms|
       #cpdm grouped by priority
       cpdms.each do |cpdm|
