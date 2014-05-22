@@ -21,12 +21,12 @@ class AdManager
       end
     end
 
-    return ad_to_show['ad']
+    return true,'',ad_to_show['ad']
   end
 
   def self.get_ad_list(ad_type)
     ads  = Advertisement.where('ad_type between ? and ?', ad_type, ad_type+100)
-    return ads
+    return true,'',ads
   end
 
   def self.get_root_ad_type(ad_type)

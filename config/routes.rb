@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   get 'advertisement/get_cpdm'
   get 'advertisement/get_cpx'
 
+  get 'advertisement/get_cpd_list'
+  get 'advertisement/get_cpdm_list'
+  get 'advertisement/get_cpx_list'
+
   end
 
   namespace :api do

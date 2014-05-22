@@ -1,53 +1,37 @@
 class Api::AdvertisementController < ApplicationController
+  require_relative '../../managers/ad_manager'
+  require_relative '../../validators/ad_validator'
   def get_cpd
-  end
-  # priority
-  # 100 200 300
-  def get_ad(ad_type)
-    ad_type = (ad_type / 10).floor * 10 # 302 => 300, 370 => 300
-    @arr_ads = []   
-    log_model = nil
-    log_model = LogCpd if ad_type == 100
-    log_model = LogCpdm if ad_type == 200
-    log_model = LogCpx if ad_type == 300
-
-    @grouped_ad = Advertisement.where('ad_type between ? and ?',ad_type, ad_type+100).group('priority')
-    @grouped_ad.each do |ad|
-      @arr_ads.push(Advertisement.where('ad_type >= ? and priority = ? and remain > 0',ad_type,ad.priority))
-    end
-
-    @ad_to_show = {'log_cnt' => 999999, 'ad' => nil}
-    @arr_ads.each do |ads|
-      ads.each do |ad|
-        cnt = log_model.where("ad_id=? and DATEDIFF(created_at,curdate())=0", ad.id).count
-        if @ad_to_show['log_cnt'] > cnt
-          @ad_to_show['log_cnt'] = cnt
-          @ad_to_show['ad'] = ad
-        end
-      end
-    end
-
-    return true, 'test', @ad_to_show['ad']
-  end
-
-  def get_cpd
-    @status, @msg, @data = get_ad(100)
-  end
+    @status, @msg, @data = AdValidator.get_ad(params)
+    @status, @msg, @data = AdManager.get_ad(100) if @status
+  end 
 
   def get_cpdm
-    @status, @msg, @data = get_ad(200)
+    @status, @msg, @data = AdValidator.get_ad(params)
+    @status, @msg, @data = AdManager.get_ad(200) if @status
   end
 
   def get_cpx
-    @status, @msg, @data = get_ad(300)
+    @status, @msg, @data = AdValidator.get_ad(params)
+    @status, @msg, @data = AdManager.get_ad(300) if @status
   end
 
+
   def get_cpd_list
+    @status, @msg, @data = AdValidator.get_ad_list(params)
+    @status, @msg, @data = AdManager.get_ad_list(100) if @status
   end
+
   def get_cpdm_list
+    @status, @msg, @data = AdValidator.get_ad_list(params)
+    @status, @msg, @data = AdManager.get_ad_list(200) if @status
   end
+
   def get_cpx_list
+    @status, @msg, @data = AdValidator.get_ad_list(params)
+    @status, 2msg, @data = AdManager.get_ad_list(300) if @status
   end
+
   
   def get_coupon_list
   end
