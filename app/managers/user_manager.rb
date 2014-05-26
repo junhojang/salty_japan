@@ -59,10 +59,16 @@ class UserManager
     return true,'',p_user
   end
 
-  def self.withdraw_from_member(user)
+  def self.withdraw_from_member(params)
+    uesr = User.find_by id: params[:user_id]
     user.is_active = 0
     user.save
     return true,'',user
+  end
+
+  def self.login(params)
+    user = User.find_by email: params[:email]
+    return true,'',LogManager.set_log_user_login(user.id,'Login') 
   end
 
   def self.get_user_info(params)

@@ -47,4 +47,25 @@ class EtcValidator
       return false,'',nil
     end
   end
+
+  def self.attendance
+    if params[:user_id].present?
+      if params[:user_id].exists?(id: params[:user_id])
+        return true,'',nil
+      else
+        return false,'',nil
+      end
+    else
+      return false,'',nil
+    end
+  end
+
+  def self.get_ment(params)
+    if params[:type].present?
+      return true,'',nil
+    else
+      return false,'',nil
+    end
+  end
+
 end

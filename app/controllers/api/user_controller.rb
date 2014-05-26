@@ -31,12 +31,12 @@ class Api::UserController < ApplicationController
 
   def withdraw_from_member
     @status, @msg, @data = UserValidator.withdraw_from_member(params)
-    @status, @msg, @data = UserManager.withdraw_from_member(@data) if @status
+    @status, @msg, @data = UserManager.withdraw_from_member(params) if @status
   end
 
   def login
     @status, @msg, @data = UserValidator.login(params)
-    @status, @msg, @data = LogManager.set_log_user_login(@data.id,'') if @status
+    @status, @msg, @data = UserManager.login(params) if @status
   end
 
   def get_user_info

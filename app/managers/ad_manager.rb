@@ -29,7 +29,12 @@ class AdManager
     return true,'',ads
   end
 
-  def self.get_root_ad_type(ad_type)
-    return (ad_type / 10).floor * 10 # 302 => 300, 370 => 300
+  def self.get_coupon_list
+    return true,'',Coupon.all
   end
+
+  def self.get_my_coupon_list(params)
+    return true,'',MyCoupon.where('user_id = ?',params[:user_id])
+  end
+
 end

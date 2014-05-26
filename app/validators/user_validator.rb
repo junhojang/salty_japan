@@ -66,9 +66,9 @@ class UserValidator
 
   def self.withdraw_from_member
     if params[:user_id].present?
-      if @user = (User.find_by id: params[:user_id])
-        if @user.is_active == 1
-          return true,'',@user
+      if user = (User.find_by id: params[:user_id])
+        if user.is_active == 1
+          return true,'',nil
         else
           return false,'',nil
         return
@@ -82,8 +82,8 @@ class UserValidator
 
   def self.login(params)
     if params[:email].present? and params[:password].present?
-      if @user = (User.find_by email: params[:email])
-        if @user.authenticate(params[:password])
+      if user = (User.find_by email: params[:email])
+        if user.authenticate(params[:password]) and user.is_active == 1
           return true,'',nil
         else
           return false,'',nil
