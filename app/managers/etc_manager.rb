@@ -1,6 +1,6 @@
 class EtcManager
   def self.get_help_list
-    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_help_list'),BoardHelp.all
+    return true,MsgMaker.make_msg(MsgMaker::TYPE_SUCCESS,'get_help_list'),BoardHelp.all
   end
 
   def self.get_notice_list
