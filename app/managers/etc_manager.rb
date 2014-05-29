@@ -1,26 +1,26 @@
 class EtcManager
   def self.get_help_list
-    return true,'',BoardHelp.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_help_list'),BoardHelp.all
   end
 
   def self.get_notice_list
-    return true,'',BoardNotice.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_notice_list'),BoardNotice.all
   end
 
   def self.get_main_notice_list
-    return true,'',BoardNotice.where('notice_type = 1')
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_main_notice_list'),BoardNotice.where('notice_type = 1')
   end
 
   def self.get_board_notice_list
-    return true,'',BoardNotice.where('notice_type = 0')
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_board_notice_list'),BoardNotice.where('notice_type = 0')
   end
 
   def self.get_app_info
-    return true,'',AppInfo.last
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_app_info'),AppInfo.last
   end
   
   def self.get_prize_list
-    return true,'',Prize.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_prize_list'),Prize.all
   end
 
   def self.attendance(params)
@@ -31,13 +31,14 @@ class EtcManager
       progress.daily_test_cnt += 1
       progress.save
     end
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'attendance'),progress
   end
 
   def self.get_bank_list
-    return true,'',BankList.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_bank_list'),BankList.all
   end
 
   def self.get_ment(params)
-    return true,'',Ment.where('type = ?',params[:type])
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_ment'),Ment.where('type = ?',params[:type])
   end
 end

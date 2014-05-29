@@ -3,10 +3,11 @@ class TestValidator
 
   def self.chk_level_test_available(params)
     # test_type 301 == level test
-    # not developed
     if params[:user_id].present?
       if !User.exists?(id: params[:user_id])
         return true,'',nil
+      elsif LogTest.where('user_id = ? and test_type = 301',params[:user_id]).count > 0
+        return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_level_test_available',MsgMaker.EXIST,'level_test_log')
       else
         return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_level_test_available',MsgMaker.EXIST,'user'),nil
       end

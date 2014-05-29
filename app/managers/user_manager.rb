@@ -24,7 +24,7 @@ class UserManager
     end
     user_info.save
     LogManager.set_log_signup(user.id,1,'Sucess to signup with email')
-    return user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'signup_with_email'),user
   end
 
   def self.signup_with_facebook(params)
@@ -46,7 +46,7 @@ class UserManager
     end
     user_info.save
     LogManager.set_log_signup(user.id,2,'Sucess to signup with f_email')
-    return true,'',user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'signup_with_facebook'),user
   end
 
   def self.cross_signup(params)
@@ -56,27 +56,27 @@ class UserManager
     p_user_info.f_address = params[:f_address]
     p_user.save
     p_user_info.save
-    return true,'',p_user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'cross_signup'),p_user
   end
 
   def self.withdraw_from_member(params)
     uesr = User.find_by id: params[:user_id]
     user.is_active = 0
     user.save
-    return true,'',user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'withdraw_from_member'),user
   end
 
   def self.login(params)
     user = User.find_by email: params[:email]
-    return true,'',LogManager.set_log_user_login(user.id,'Login') 
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'login'),LogManager.set_log_user_login(user.id,'Login') 
   end
 
   def self.get_user_info(params)
-    return true,'',UserInfo.find_by user_id: params[:user_id]
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_user_info'),UserInfo.find_by user_id: params[:user_id]
   end 
 
   def self.get_learning_progress(params)
-    return true,'',LearningProgress.find_by user_id: params[:user_id]
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_learning_progress'),LearningProgress.find_by user_id: params[:user_id]
   end
 
   def self.set_user_password(params)
@@ -84,7 +84,7 @@ class UserManager
     user.password = params[:password]
     user.password_confirmation = params[:password]
     user.save
-    return true,'',user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set or change user_password'),user
   end
   
   def self.change_user_password(params)
@@ -95,7 +95,7 @@ class UserManager
     user = User.find_by id: params[:user_id]
     user.users_character = params[:character]
     user.save
-    return true,'',user
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'change_user_character'),user
   end
   
 end

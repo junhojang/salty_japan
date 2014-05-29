@@ -1,11 +1,12 @@
 class TestManager
+
   def self.get_level_test_words(params)
     level  = (Level.find_by category_id: 100)
     stage = (Stage.find_by level_id: @level.id)
     data = Word.where(stage_id: @stage.id).limit(20)
     status = true
     msg = ''
-    return true,'',data
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_level_test_words'),data
   end
 
   def self.chk_level_test_available(params)
@@ -13,7 +14,7 @@ class TestManager
     if level_test_log.present?
       return false,'',nil
     else
-      return true,'',nil
+      return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'chk_level_test_available'),nil
     end
   end
 
@@ -38,7 +39,7 @@ class TestManager
         @point = 15
       end  
     end
-    return true,'',LogManager.set_log_test(params[:user_id], params[:test_type], params[:category], params[:stage], params[:level], @medal, params[:score], @reward, @point, 'F', @is_first)
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set_log_test'),LogManager.set_log_test(params[:user_id], params[:test_type], params[:category], params[:stage], params[:level], @medal, params[:score], @reward, @point, 'F', @is_first)
   end
 
 end

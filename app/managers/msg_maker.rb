@@ -9,6 +9,7 @@ class MsgMaker
   TYPE_FAILED = 'failed to'
 
   LACK_OF_PARAMS = 'lack of params' 
+  EXIST = 'exist'
   NOT_EXIST = 'not exist'
   NOT_ENOUGH = 'not enough'
 

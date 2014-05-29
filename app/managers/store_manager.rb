@@ -1,7 +1,7 @@
 class StoreManager
 
   def self.get_qpcon_list(params)
-    return true,'',QpconProduct.where('category_id = ?',params[:category_id])
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_qpcon_list'),QpconProduct.where('category_id = ?',params[:category_id])
   end
 
   def self.order_qpcon_product(params)
@@ -18,6 +18,6 @@ class StoreManager
     exchange.amount = params[:amount]
     exchange.save
     
-    return true,'',exchange
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'request_to_exchange_reward'),exchange
   end
 end

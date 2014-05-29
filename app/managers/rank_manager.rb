@@ -12,7 +12,7 @@ class RankManager
     when 4
       model = RankingWeekD
     end
-    return true,'',model.find_by(user_id: params[:user_id])
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_my_rank'),model.find_by(user_id: params[:user_id])
   end
 
   def self.get_rank_list(params)
@@ -27,6 +27,6 @@ class RankManager
     when 4
       model = RankingWeekD
     end
-    return true,'',model.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_rank_list'),model.all
   end
 end

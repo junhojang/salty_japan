@@ -22,33 +22,33 @@ class AdManager
     end
     coupon = Coupon.find_by(ad_id: ad_to_show['ad'].id)
     data = {'ad' => ad_to_show['ad'], 'coupon' => coupon}
-    return true,'',data
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_ad'),data
   end
 
   def self.get_ad_list(ad_type)
     ads  = Advertisement.where('ad_type between ? and ?', ad_type, ad_type+100)
     coupons = 
-    return true,'',ads
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_ad_list'),ads
   end
 
   def self.get_coupon_list
-    return true,'',Coupon.all
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_coupon_list'),Coupon.all
   end
 
   def self.get_my_coupon_list(params)
-    return true,'',MyCoupon.where('user_id = ?',params[:user_id])
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_my_coupon_list'),MyCoupon.where('user_id = ?',params[:user_id])
   end
 
   def self.set_cpd_log(params)
-    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpd log')
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set_cpd_log'),LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpd log')
   end
 
   def self.set_cpdm_log(params)
-    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdm log')
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set_cpdm_log'),LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdm log')
   end
 
   def self.set_cpx_log(params)
-    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdx log')
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set_cpx_log'),LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdx log')
   end
 
   def self.get_survey(params)
@@ -62,5 +62,5 @@ class AdManager
       question = {'question' => q.question,'answers' => answers}
       datas[:questions].add(question)
     end
-    return true,'',datas
+    return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'get_survey'),datas
 end
