@@ -20,12 +20,14 @@ class AdManager
         end
       end
     end
-
-    return true,'',ad_to_show['ad']
+    coupon = Coupon.find_by(ad_id: ad_to_show['ad'].id)
+    data = {'ad' => ad_to_show['ad'], 'coupon' => coupon}
+    return true,'',data
   end
 
   def self.get_ad_list(ad_type)
     ads  = Advertisement.where('ad_type between ? and ?', ad_type, ad_type+100)
+    coupons = 
     return true,'',ads
   end
 
@@ -37,4 +39,28 @@ class AdManager
     return true,'',MyCoupon.where('user_id = ?',params[:user_id])
   end
 
+  def self.set_cpd_log(params)
+    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpd log')
+  end
+
+  def self.set_cpdm_log(params)
+    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdm log')
+  end
+
+  def self.set_cpx_log(params)
+    return true,'',LogManager.set_log_cpd(params[:user_id], params[:ad_id], params[:act], 'cpdx log')
+  end
+
+  def self.get_survey(params)
+   
+    survey = Survey.find_by cpx_id: params[:cpx_id]
+    questions = SurveyQuestion.where('survey_id = ?',survey.id)
+    datas =  {'title' => survey.title, 'questions' => []}
+
+    questions.each do |q|
+      answers = SurveyAnswer.where('question_id = ?',q.id).select('answer')
+      question = {'question' => q.question,'answers' => answers}
+      datas[:questions].add(question)
+    end
+    return true,'',datas
 end

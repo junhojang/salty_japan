@@ -1,18 +1,43 @@
 class UserValidator
+  require '../managers/msg_maker'
+
+  def self.chk_join_available
+    if params[:ph].present?
+      if !UserInfo.exists?(ph: params[:ph])
+        return true,'',nil
+      else
+        return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_join_available',MsgMaker.EXIST,'user'),nil
+      end
+    else
+      return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_join_available',MsgMaker.LACK_OF_PARAMS),nil
+    end
+  end
+
+  def self.chk_nickname_available(params)
+    if params[:nickname].present?
+      if !UserInfo.exists?(nickname: params[:nickname])
+        return true,'',nil
+      else 
+        return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_nickname_available',MsgMaker.EXIST,'nickanme'),nil
+      end
+    else
+      return false,MsgMaker.make_msg(MsgMaker.TYPE_FAILED,'chk_nickname_available',MsgMaker.LACK_OF_PARAMS),nil
+    end
+  end
 
   def self.det_facebook_login_method(params)
     if params[:ph].present? and params[:f_email].present?
-      @p_user_info = UserInfo.find_by ph: params[:ph]
-      @p_user = User.find_by id: @p_user_info.user_id if @p_user_info.present?
-      @f_user = User.find_by f_email: params[:f_email]
-      if @f_user.present?
-        return true, 'login', {method:1}
-      elsif !@f_uesr.present? and !@p_user.present?
-        return true, 'signup', {method:4}
-      elsif !@f_user.present? and @p_user.f_email.present?
-        return true, 'wrong femail', {method:2}
-      elsif !@f_user.present? and @p_user.email.present?
-        return true, 'cross signup', {method:3}
+      p_user_info = UserInfo.find_by ph: params[:ph]
+      p_user = User.find_by id: p_user_info.user_id if p_user_info.present?
+      f_user = User.find_by f_email: params[:f_email]
+      if f_user.present?
+        return true, 'login', {method:1} # 201
+      elsif !f_uesr.present? and !p_user.present?
+        return true, 'signup', {method:4} # 145
+      elsif !f_user.present? and p_user.f_email.present?
+        return true, 'wrong femail', {method:2} # 143
+      elsif !f_user.present? and p_user.email.present?
+        return true, 'cross signup', {method:3} # 144
       end
     else
       return false
@@ -33,19 +58,7 @@ class UserValidator
       return true, nil, nil
     end
   end
-
-  def self.chk_nickname(params)
-    if params[:nickname].present?
-      if UserInfo.exists?(nickname: params[:nickname])
-        return false,'',nil
-      else 
-        return true,'',nil
-      end
-    else
-      return false,'',nil
-    end
-  end
-
+ 
   def self.cross_signup(params)
     if params[:ph].present? and params[:f_email].present?
       return true,'',nil
@@ -66,14 +79,13 @@ class UserValidator
 
   def self.withdraw_from_member
     if params[:user_id].present?
-      if user = (User.find_by id: params[:user_id])
-        if user.is_active == 1
-          return true,'',nil
-        else
-          return false,'',nil
-        return
-      else
+      user = (User.find_by id: params[:user_id])
+      if !user.present?
         return false,'',nil
+      elsif user.is_active != 1
+        return false,'',nil
+      else
+        return true,'',nil
       end
     else
       return false,'',nil
@@ -98,10 +110,10 @@ class UserValidator
 
   def self.get_user_info(params)
     if params[:user_id].present?
-      if UserInfo.exists?(user_id: params[:user_id])
-        return true,'',user
+      if !UserInfo.exists?(user_id: params[:user_id])
+        return false,'',user
       else
-        return false,'',nil
+        return true,'',nil
       end
     else
       return false,'',nil
@@ -110,10 +122,10 @@ class UserValidator
 
   def self.get_learning_progress(params)
     if params[:user_id].present?
-      if LearningProgress.exist?(user_id: params[:uesr_id])
-        return true,'',nil
-      else
+      if !LearningProgress.exist?(user_id: params[:uesr_id])
         return false,'',nil
+      else
+        return true,'',nil
       end
     else
       return false,'',nil
@@ -122,10 +134,10 @@ class UserValidator
 
   def self.set_user_password(params)
     if params[:user_id].present? and params[:password].present?
-      if User.exists?(id: params[:user_id])
-        return true,'',nil
-      else
+      if !User.exists?(id: params[:user_id])
         return false,'',nil
+      else
+        return true,'',nil
       end
     else
       return false,'',nil
@@ -135,14 +147,12 @@ class UserValidator
   def self.change_user_password(params)
     if params[:user_id].present? and params[:password].present? and params[:new_password].present?
       user = User.find_by id: params[:user_id]
-      if user.present?
-        if user.authenticate(params[:password])
-          return true,'',nil
-        else
-          return false,'',nil
-        end
-      else
+      if !user.present?
         return false,'',nil
+      elsif !user.authenticate(params[:password])
+          return false,'',nil
+      else
+          return true,'',nil
       end
     else
       return false,'',nil
@@ -151,10 +161,10 @@ class UserValidator
 
   def self.change_user_character(params)
     if params[:user_id].present? and params[:character].present?
-      if User.exists?(id: params[:user_id])
-        return true,'',nil
-      else
+      if !User.exists?(id: params[:user_id])
         return false,'',nil
+      else
+        return true,'',nil
       end
     else
       return false,'',nil

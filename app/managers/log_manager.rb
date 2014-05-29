@@ -55,7 +55,7 @@ class LogManager
     return log
   end
 
-  def self.set_log_cpd(user_id, cpd_id, act, dsc)
+  def self.set_log_cpd(user_id, ad_id, act, dsc)
     log = LogCpd.new
     log.user_id = user_id
     log.cpd_id = cpd_id
@@ -65,7 +65,7 @@ class LogManager
     return log
   end
 
-  def self.set_log_cpdm(user_id, cpdm_id, act, view_time, dsc)
+  def self.set_log_cpdm(user_id, ad_id, act, view_time, dsc)
     log = LogCpdm.new
     log.user_id = user_id
     log.cpdm_id = cpdm_id
@@ -76,7 +76,7 @@ class LogManager
     return log
   end
 
-  def self.set_log_cpx(user_id, cpx_id, act, dsc)
+  def self.set_log_cpx(user_id, ad_id, act, dsc)
     log = LogCpx.new
     log.user_id = user_id
     log.cpx_id = cpx_id

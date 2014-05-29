@@ -7,4 +7,38 @@ class TestManager
     msg = ''
     return true,'',data
   end
+
+  def self.chk_level_test_available(params)
+    level_test_log = LogTest.where('user_id = ? and test_type = 301',params[:user_id])
+    if level_test_log.present?
+      return false,'',nil
+    else
+      return true,'',nil
+    end
+  end
+
+  def self.set_log_test(params)
+    if params[:test_type] == 302 or params[:test_type] == 303
+      info = AppInfo.last
+      if info.two_medal <= params[:score]
+        @medal = 2
+      elsif info.one_medal <= params[:score]
+        @medal = 1
+      else
+        @medal = 0
+      end
+      cnt_test_log = LogTest.where('user_id = ? and test_type = ? and category = ? and stage = ? and level = ?',params[:user_id],params[:test_type],params[:category],params[:stage],params[:level]).count
+      if cnt_test_log == 0
+        @is_first = 1
+        @reward = 20
+        @point = 30
+      else
+        @is_first = 0
+        @reward = 10
+        @point = 15
+      end  
+    end
+    return true,'',LogManager.set_log_test(params[:user_id], params[:test_type], params[:category], params[:stage], params[:level], @medal, params[:score], @reward, @point, 'F', @is_first)
+  end
+
 end

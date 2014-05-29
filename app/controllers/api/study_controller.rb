@@ -11,4 +11,5 @@ class Api::StudyController < ApplicationController
     @status, @msg, @data = StudyValidator.get_my_word_list(params)
     @status, @msg, @data = StudyManager.get_my_word_list(params) if @status
   end
+
 end
