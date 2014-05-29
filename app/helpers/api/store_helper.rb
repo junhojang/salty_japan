@@ -1,2 +1,2 @@
-module Api::QpconHelper
+module Api::StoreHelper
 end
