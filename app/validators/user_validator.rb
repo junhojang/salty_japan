@@ -40,8 +40,8 @@ class UserValidator
       return false,MsgMaker.make_msg(MsgMaker::TYPE_FAILED,'det_facebook_login_method',MsgMaker::LACK_OF_PARAMS),nil
     else
       p_user_info = UserInfo.find_by ph: params[:ph]
-      p_user = User.find_by id: p_user_info.user_id if p_user_info.present?
-      f_user = User.find_by f_email: params[:f_email]
+      p_user = User.find_by id: p_user_info.user_id if p_user_info.present? # find_uesr_by_ph
+      f_user = User.find_by f_email: params[:f_email] # find_user_by_f_email
       if f_user.present?
         return true, 'login', {method:1} # 201
       elsif !f_uesr.present? and !p_user.present?
@@ -50,6 +50,7 @@ class UserValidator
         return true, 'wrong femail', {method:2} # 143
       elsif !f_user.present? and p_user.email.present?
         return true, 'cross signup', {method:3} # 144
+      end
     end
   end
  

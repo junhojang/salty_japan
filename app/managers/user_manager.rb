@@ -23,6 +23,9 @@ class UserManager
       LogManager.set_log_reward(user.id,2002,30,'Signup Recommend reward')        
     end
     user_info.save
+    # make rank
+    # make stage info
+    
     LogManager.set_log_signup(user.id,1,'Sucess to signup with email')
     return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'signup_with_email'),user
   end

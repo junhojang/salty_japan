@@ -52,7 +52,6 @@ class AdManager
   end
 
   def self.get_survey(params)
-   
     survey = Survey.find_by cpx_id: params[:cpx_id]
     questions = SurveyQuestion.where('survey_id = ?',survey.id)
     datas =  {'title' => survey.title, 'questions' => []}

@@ -14,7 +14,12 @@ class MsgMaker
   NOT_ENOUGH = 'not enough'
 
   def self.make_msg(msg_type,function,reason='',param='') # param is used for NOT_EXIST reason
-    return msg_type + ' ' + function + '. ' + reason + ' ' + param
+    msg = ''
+    msg += msg_type if msg_type.present?
+    msg += ' ' + function + '.' if function.present?
+    msg += ' ' + reason if reason.present?
+    msg += ' ' + param + '.' if param.present?
+    return msg
   end
 
 end

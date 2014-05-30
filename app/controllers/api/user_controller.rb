@@ -15,7 +15,7 @@ class Api::UserController < ApplicationController
   end
   # 123 -> determine 128 or 131 or 201 or 301
   def signup_with_email
-    @status, @msg, @data = UserValidator.chk_email_signup_params(params)
+    @status, @msg, @data = UserValidator.signup_with_email(params)
     @status, @msg, @data = UserManager.signup_with_email(params) if @status
   end
   # 142 -> determine 201 or 143 or 144 or 145

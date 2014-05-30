@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   # store end
 
   # study start
+  get 'study/get_stage_info'
+  get 'study/get_word_list'
   get 'study/set_my_word'
   get 'study/get_my_word_list'
   # study end

@@ -19,6 +19,7 @@ class TestManager
   end
 
   def self.set_log_test(params)
+    # developing update_user_stage_info
     if params[:test_type] == 302 or params[:test_type] == 303
       info = AppInfo.last
       if info.two_medal <= params[:score]
@@ -40,6 +41,11 @@ class TestManager
       end  
     end
     return true,MsgMaker.make_msg(MsgMaker.TYPE_SUCCESS,'set_log_test'),LogManager.set_log_test(params[:user_id], params[:test_type], params[:category], params[:stage], params[:level], @medal, params[:score], @reward, @point, 'F', @is_first)
+  end
+
+  def self.update_user_stage_info(params)
+    user_stage_info = UserStageInfo.find_by user_id: params[:user_id]
+    user_stage_info.stage_info
   end
 
 end
